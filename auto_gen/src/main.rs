@@ -2,7 +2,7 @@ use fake::{Dummy, Fake, Faker};
 use serde::Serialize;
 use std::fs::File;
 use std::error::Error;
-use rand::Rng;
+//use rand::Rng;
 use fake::faker::company::en::*;
 use fake::faker::name::en::*;
 use fake::faker::boolean::en::*;
@@ -34,11 +34,12 @@ pub struct Foo {
 
 
 fn main() -> Result<(), Box<dyn Error>>{
-    let mut rng = rand::thread_rng();
+//    let mut rng = rand::thread_rng();
     let file = File::create("data.csv")?;
     let mut wtr = csv::Writer::from_writer(file);
     let mut i = 0;
-    let rows = rng.gen_range(10000..100000);
+//    let rows = rng.gen_range(10000..100000);
+    let rows = 10000;
     loop {
         wtr.serialize(Faker.fake::<Foo>())?;
         if i == rows {
