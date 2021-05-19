@@ -182,6 +182,24 @@ if st.sidebar.checkbox('LinearSVR'):
 
 if st.sidebar.checkbox('DecisionTreeRegressor'):
     regr_train_model('Tree', DecisionTreeRegressor(), regrMetricLogger)
+    if st.sidebar.checkbox('DecisionTreeRegressor(Best)'):
+        depth_start = st.sidebar.slider("depth starts from", 1, 1000, value=3)
+        depth_end = st.sidebar.slider("depth ends with", 1, 1000, value=10)
+        depth_step = st.sidebar.slider("depth step", 1, 100, value=2)
+        depth_range = np.array(range(depth_start, depth_end, depth_step))
+        tree_pars = [{'max_depth': depth_range}]
+
+        gs_tree = GridSearchCV(DecisionTreeRegressor(), tree_pars, cv=5, scoring='neg_mean_squared_error')
+        gs_tree.fit(data_X_train, data_y_train)
+        regr_train_model('Tree(Best)', gs_tree.best_estimator_, regrMetricLogger)
+        st.subheader('Best model for DecisionTreeRegressor:')
+        st.write(gs_tree.best_estimator_)
+        
+        fig, ax = plt.subplots(figsize=(5, 3))
+        ax.plot(depth_range, gs_tree.cv_results_['mean_test_score'])
+        st.pyplot(fig)
+    st.sidebar.markdown("""---""")
+
 
 if st.sidebar.checkbox('RandomForestRegressor'):
     regr_train_model('RF', RandomForestRegressor(), regrMetricLogger)
