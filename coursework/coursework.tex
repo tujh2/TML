@@ -1,0 +1,1948 @@
+\documentclass[11pt]{report}
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{blindtext}
+\usepackage[russian]{babel}
+\usepackage{mwe}
+\usepackage{graphbox}
+\usepackage[document]{ragged2e}
+\usepackage[margin=50pt]{geometry}
+\usepackage{longtable}
+\usepackage{fontspec}
+\usepackage{float}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{minted}
+\usepackage{titlesec}
+\usepackage{titletoc}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\setstretch{1}
+\graphicspath{{./images/}}
+\setmainfont[Scale=0.8]{LiberationSerif}
+\setmonofont[Scale=0.8]{Hack}
+\titleformat{\chapter}{\normalfont\LARGE\bfseries}{\thechapter}{1em}{}
+\titleclass{\chapter}{straight}
+\titlespacing{\chapter}{0pt}{0pt}{5pt}[25pt]
+
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    
+    \usepackage{iftex}
+    \ifPDFTeX
+    	\usepackage[T1]{fontenc}
+    	\usepackage{mathpazo}
+    \else
+    	\usepackage{fontspec}
+    \fi
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range
+    \makeatletter % fix for old versions of grffile with XeLaTeX
+    \@ifpackagelater{grffile}{2019/11/01}
+    {
+      % Do nothing on new versions
+    }
+    {
+      \def\Gread@@xetex#1{%
+        \IfFileExists{"\Gin@base".bb}%
+        {\Gread@eps{\Gin@base.bb}}%
+        {\Gread@@xetex@aux#1}%
+      }
+    }
+    \makeatother
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % common color for the border for error outputs.
+    \definecolor{outerrorbackground}{HTML}{FFDFDF}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{coursework}
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\@namedef{PY@tok@w}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\@namedef{PY@tok@c}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\@namedef{PY@tok@cp}{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\@namedef{PY@tok@k}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kt}{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\@namedef{PY@tok@o}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ow}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@nb}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nf}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@ne}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\@namedef{PY@tok@nv}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@no}{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\@namedef{PY@tok@nl}{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\@namedef{PY@tok@ni}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\@namedef{PY@tok@na}{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\@namedef{PY@tok@nt}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nd}{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@s}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sd}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@si}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\@namedef{PY@tok@se}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\@namedef{PY@tok@sr}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\@namedef{PY@tok@ss}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sx}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@m}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@gh}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gu}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gd}{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\@namedef{PY@tok@gi}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\@namedef{PY@tok@gr}{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\@namedef{PY@tok@ge}{\let\PY@it=\textit}
+\@namedef{PY@tok@gs}{\let\PY@bf=\textbf}
+\@namedef{PY@tok@gp}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@go}{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\@namedef{PY@tok@gt}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\@namedef{PY@tok@err}{\def\PY@bc##1{{\setlength{\fboxsep}{\string -\fboxrule}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}}
+\@namedef{PY@tok@kc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kd}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kr}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@bp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@fm}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@vc}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vg}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vi}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vm}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sa}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sb}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sc}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@dl}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s2}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sh}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s1}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@mb}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mf}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mh}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mi}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@il}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mo}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ch}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\@namedef{PY@tok@cm}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\@namedef{PY@tok@cpf}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\@namedef{PY@tok@c1}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\@namedef{PY@tok@cs}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb. 
+    \makeatletter
+        \newbox\Wrappedcontinuationbox 
+        \newbox\Wrappedvisiblespacebox 
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}} 
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}} 
+        \newcommand*\Wrappedcontinuationindent {3ex } 
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox} 
+        % Take advantage of the already applied Pygments mark-up to insert 
+        % potential linebreaks for TeX processing. 
+        %        {, <, #, %, $, ' and ": go to next line. 
+        %        _, }, ^, &, >, - and ~: stay at end of broken line. 
+        % Use of \textquotesingle for straight quote. 
+        \newcommand*\Wrappedbreaksatspecials {% 
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}% 
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}% 
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}% 
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}% 
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}% 
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}% 
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}% 
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}% 
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}% 
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}% 
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}% 
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}% 
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}% 
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}% 
+        } 
+        % Some characters . , ; ? ! / are not pygmentized. 
+        % This macro makes them "active" and they will insert potential linebreaks 
+        \newcommand*\Wrappedbreaksatpunct {% 
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}% 
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}% 
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}% 
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}% 
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}% 
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}% 
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}% 
+            \catcode`\.\active
+            \catcode`\,\active 
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active 
+            \lccode`\~`\~ 	
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+        
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active 	
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+    
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        {\ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}}
+    }
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+\hypersetup{colorlinks=true, linkcolor=black}
+\begin{document}
+	\tableofcontents   
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+		\pagebreak
+	  \chapter{Введение}
+	  \qquad Курсовой проект – самостоятельная часть учебной дисциплины «Технологии машинного обучения» – учебная и практическая исследовательская студенческая работа, направленная на решение комплексной задачи машинного обучения. Результатом курсового проекта является отчет, содержащий описания моделей, тексты программ и результаты экспериментов. \\
+	\qquad Курсовой проект опирается на знания, умения и владения, полученные студентом в рамках лекций и лабораторных работ по дисциплине. \\
+	\qquad В рамках курсового проекта я должен провести решение задачи машинного обучения на основе материалов дисциплины.
+
+\chapter{Поиск и выбор набора данных для построения моделей машинного
+обучения. На основе выбранного набора данных студент должен построить
+модели машинного обучения для решения задачи
+регрессии.}
+
+    В качестве набора данных мы будем использовать набор данных по продажам
+домов в США за Май 2014 - Май 2015 -
+https://www.kaggle.com/harlfoxem/housesalesprediction?select=kc\_house\_data.csv
+
+Датасет состоит из 1 файла: kc\_house\_data.csv
+
+Файл описывает следующие колонки:
+
+id - уникальный id продажи дома\\
+date - дата продажи дома\\
+price - цена продажи дома\\
+bedrooms - кол-во спальных комнат\\
+bathrooms - кол-во ванных комнат (где .5 считается за комнату с туалетом
+без душа)\\
+sqft\_living - жилая площадь(кв. футах)\\
+sqft\_lot - площать земли\\
+floors - кол-во этажей\\
+waterfront - рядом с водой (1 или 0)\\
+view - хороший вид (от 0 или 4)\\
+condition - условия апартаметов (от 1 до 5)\\
+grade - оценка (от 1 до 13)\\
+sqft\_above - площадь пространства, выше земли\\
+sqft\_basement - площадь пространства, ниже земли(подвал)\\
+yr\_built - год постройки\\
+yr\_renovated - год реновации\\
+zipcode - почтовый код\\
+lat - долгота (координаты)\\
+long - широта (координаты)\\
+sqft\_living15 - площадь внутренней жилой площади для ближайших 15
+соседей\\
+sqft\_lot15 - площадь земли для ближайших 15 соседей
+
+В рассматриваемом примере будем решать задачу регрессии - целевой
+признак `price' - цена
+
+\section{Импорт библиотек}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{1}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+\PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+\PY{k+kn}{from} \PY{n+nn}{typing} \PY{k+kn}{import} \PY{n}{Dict}\PY{p}{,} \PY{n}{Tuple}
+\PY{k+kn}{from} \PY{n+nn}{IPython}\PY{n+nn}{.}\PY{n+nn}{display} \PY{k+kn}{import} \PY{n}{Image}
+
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k+kn}{import} \PY{n}{MinMaxScaler}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k+kn}{import} \PY{n}{LinearRegression}\PY{p}{,} \PY{n}{LogisticRegression}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k+kn}{import} \PY{n}{train\PYZus{}test\PYZus{}split}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{neighbors} \PY{k+kn}{import} \PY{n}{KNeighborsRegressor}\PY{p}{,} \PY{n}{KNeighborsClassifier}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k+kn}{import} \PY{n}{accuracy\PYZus{}score}\PY{p}{,} \PY{n}{balanced\PYZus{}accuracy\PYZus{}score}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k+kn}{import} \PY{n}{precision\PYZus{}score}\PY{p}{,} \PY{n}{recall\PYZus{}score}\PY{p}{,} \PY{n}{f1\PYZus{}score}\PY{p}{,} \PY{n}{classification\PYZus{}report}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k+kn}{import} \PY{n}{confusion\PYZus{}matrix}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k+kn}{import} \PY{n}{plot\PYZus{}confusion\PYZus{}matrix}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k+kn}{import} \PY{n}{GridSearchCV}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k+kn}{import} \PY{n}{mean\PYZus{}absolute\PYZus{}error}\PY{p}{,} \PY{n}{mean\PYZus{}squared\PYZus{}error}\PY{p}{,} \PY{n}{mean\PYZus{}squared\PYZus{}log\PYZus{}error}\PY{p}{,} \PY{n}{median\PYZus{}absolute\PYZus{}error}\PY{p}{,} \PY{n}{r2\PYZus{}score} 
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k+kn}{import} \PY{n}{roc\PYZus{}curve}\PY{p}{,} \PY{n}{roc\PYZus{}auc\PYZus{}score}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{svm} \PY{k+kn}{import} \PY{n}{SVC}\PY{p}{,} \PY{n}{NuSVC}\PY{p}{,} \PY{n}{LinearSVC}\PY{p}{,} \PY{n}{OneClassSVM}\PY{p}{,} \PY{n}{SVR}\PY{p}{,} \PY{n}{NuSVR}\PY{p}{,} \PY{n}{LinearSVR}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{tree} \PY{k+kn}{import} \PY{n}{DecisionTreeClassifier}\PY{p}{,} \PY{n}{DecisionTreeRegressor}\PY{p}{,} \PY{n}{export\PYZus{}graphviz}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{ensemble} \PY{k+kn}{import} \PY{n}{RandomForestClassifier}\PY{p}{,} \PY{n}{RandomForestRegressor}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{ensemble} \PY{k+kn}{import} \PY{n}{ExtraTreesClassifier}\PY{p}{,} \PY{n}{ExtraTreesRegressor}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{ensemble} \PY{k+kn}{import} \PY{n}{GradientBoostingClassifier}\PY{p}{,} \PY{n}{GradientBoostingRegressor}
+\end{Verbatim}
+\end{tcolorbox}
+
+\section{Загрузка данных}
+
+    Загрузим файлы датасета в помощью библиотеки Pandas.
+
+Файл представляет собой данные в формате CSV. Разделитель - `,'
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{2}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{data/kc\PYZus{}house\PYZus{}data.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+\chapter{Проведение разведочного анализа данных. Построение графиков,
+необходимых для понимания структуры данных. Анализ и заполнение
+пропусков в
+данных.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{3}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{3}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+           id             date     price  bedrooms  bathrooms  sqft\_living  \textbackslash{}
+0  7129300520  20141013T000000  221900.0         3       1.00         1180
+1  6414100192  20141209T000000  538000.0         3       2.25         2570
+2  5631500400  20150225T000000  180000.0         2       1.00          770
+3  2487200875  20141209T000000  604000.0         4       3.00         1960
+4  1954400510  20150218T000000  510000.0         3       2.00         1680
+
+   sqft\_lot  floors  waterfront  view  {\ldots}  grade  sqft\_above  sqft\_basement  \textbackslash{}
+0      5650     1.0           0     0  {\ldots}      7        1180              0
+1      7242     2.0           0     0  {\ldots}      7        2170            400
+2     10000     1.0           0     0  {\ldots}      6         770              0
+3      5000     1.0           0     0  {\ldots}      7        1050            910
+4      8080     1.0           0     0  {\ldots}      8        1680              0
+
+   yr\_built  yr\_renovated  zipcode      lat     long  sqft\_living15  \textbackslash{}
+0      1955             0    98178  47.5112 -122.257           1340
+1      1951          1991    98125  47.7210 -122.319           1690
+2      1933             0    98028  47.7379 -122.233           2720
+3      1965             0    98136  47.5208 -122.393           1360
+4      1987             0    98074  47.6168 -122.045           1800
+
+   sqft\_lot15
+0        5650
+1        7639
+2        8062
+3        5000
+4        7503
+
+[5 rows x 21 columns]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{4}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{4}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+(21613, 21)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data}\PY{o}{.}\PY{n}{dtypes}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+id                 int64
+date              object
+price            float64
+bedrooms           int64
+bathrooms        float64
+sqft\_living        int64
+sqft\_lot           int64
+floors           float64
+waterfront         int64
+view               int64
+condition          int64
+grade              int64
+sqft\_above         int64
+sqft\_basement      int64
+yr\_built           int64
+yr\_renovated       int64
+zipcode            int64
+lat              float64
+long             float64
+sqft\_living15      int64
+sqft\_lot15         int64
+dtype: object
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{6}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{6}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+id               0
+date             0
+price            0
+bedrooms         0
+bathrooms        0
+sqft\_living      0
+sqft\_lot         0
+floors           0
+waterfront       0
+view             0
+condition        0
+grade            0
+sqft\_above       0
+sqft\_basement    0
+yr\_built         0
+yr\_renovated     0
+zipcode          0
+lat              0
+long             0
+sqft\_living15    0
+sqft\_lot15       0
+dtype: int64
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \textbf{Вывод: исходный набор данных данных не содержит пропусков}
+
+\section{Построение графиков для понимания структуры данных}
+
+    Сразу удалим ненужные столбцы - уникальный id и уникальную дату.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{7}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{sns}\PY{o}{.}\PY{n}{pairplot}\PY{p}{(}\PY{n}{data}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{7}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+<seaborn.axisgrid.PairGrid at 0x7efce06511f0>
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_15_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{8}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data}\PY{o}{.}\PY{n}{columns}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{8}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Index(['id', 'date', 'price', 'bedrooms', 'bathrooms', 'sqft\_living',
+       'sqft\_lot', 'floors', 'waterfront', 'view', 'condition', 'grade',
+       'sqft\_above', 'sqft\_basement', 'yr\_built', 'yr\_renovated', 'zipcode',
+       'lat', 'long', 'sqft\_living15', 'sqft\_lot15'],
+      dtype='object')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{9}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Скрипичные диаграммы для числовых колонок}
+\PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bedrooms}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bathrooms}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sqft\PYZus{}living}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sqft\PYZus{}lot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{floors}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{waterfront}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{view}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{condition}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{grade}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sqft\PYZus{}above}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sqft\PYZus{}basement}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{yr\PYZus{}built}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{yr\PYZus{}renovated}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{zipcode}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+       \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{long}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sqft\PYZus{}living15}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sqft\PYZus{}lot15}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
+    \PY{n}{sns}\PY{o}{.}\PY{n}{violinplot}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{data}\PY{p}{[}\PY{n}{col}\PY{p}{]}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_4.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_5.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_6.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_7.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_8.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_9.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_10.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_11.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_12.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_13.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_14.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_15.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_16.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_17.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_18.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+\chapter{Выбор признаков, подходящих для построения моделей.
+Кодирование категориальных признаков. Масштабирование данных.
+Формирование вспомогательных признаков, улучшающих качество
+моделей.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{10}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data}\PY{o}{.}\PY{n}{dtypes}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{10}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+id                 int64
+date              object
+price            float64
+bedrooms           int64
+bathrooms        float64
+sqft\_living        int64
+sqft\_lot           int64
+floors           float64
+waterfront         int64
+view               int64
+condition          int64
+grade              int64
+sqft\_above         int64
+sqft\_basement      int64
+yr\_built           int64
+yr\_renovated       int64
+zipcode            int64
+lat              float64
+long             float64
+sqft\_living15      int64
+sqft\_lot15         int64
+dtype: object
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Пока для построения модели будем использовать все признаки, кроме
+`date', т.к. не рассматриваем нашу модель как временную, и `id', т.к. он
+содержит уникальынй id покупки, который мы не рассматриваем в модели
+вообще.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{11}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{date}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Категориальные признаки отсутствуют, их кодирования не требуется(date не
+рассматриваем).
+
+Вспомогательные признаки для улучшения качества моделей в данном примере
+мы строить не будем.
+
+Выполним масштабирование данных(построим корреляционную карту, чтобы
+сравнить её с полученной в корреляционном анализе).
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{12}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{7}\PY{p}{)}\PY{p}{)}
+\PY{n}{sns}\PY{o}{.}\PY{n}{heatmap}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{n}{method}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{pearson}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax}\PY{p}{,} \PY{n}{annot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{fmt}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.2f}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{12}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+<AxesSubplot:>
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_23_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{13}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Числовые колонки для масштабирования}
+\PY{n}{scale\PYZus{}cols} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sqft\PYZus{}living}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sqft\PYZus{}lot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sqft\PYZus{}above}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+              \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sqft\PYZus{}basement}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{long}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+              \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sqft\PYZus{}living15}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sqft\PYZus{}lot15}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bedrooms}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+              \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bathrooms}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{view}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{grade}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{floors}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{yr\PYZus{}renovated}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{yr\PYZus{}built}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{condition}\PY{l+s+s1}{\PYZsq{}}
+             \PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{14}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{sc} \PY{o}{=} \PY{n}{MinMaxScaler}\PY{p}{(}\PY{p}{)}
+\PY{n}{sc\PYZus{}data} \PY{o}{=} \PY{n}{sc}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{scale\PYZus{}cols}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{15}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Добавим масштабированные данные в набор данных}
+\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{scale\PYZus{}cols}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+    \PY{n}{col} \PY{o}{=} \PY{n}{scale\PYZus{}cols}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+    \PY{n}{new\PYZus{}col\PYZus{}name} \PY{o}{=} \PY{n}{col} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZus{}scaled}\PY{l+s+s1}{\PYZsq{}}
+    \PY{n}{data}\PY{p}{[}\PY{n}{new\PYZus{}col\PYZus{}name}\PY{p}{]} \PY{o}{=} \PY{n}{sc\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{16}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{16}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+      price  bedrooms  bathrooms  sqft\_living  sqft\_lot  floors  waterfront  \textbackslash{}
+0  221900.0         3       1.00         1180      5650     1.0           0
+1  538000.0         3       2.25         2570      7242     2.0           0
+2  180000.0         2       1.00          770     10000     1.0           0
+3  604000.0         4       3.00         1960      5000     1.0           0
+4  510000.0         3       2.00         1680      8080     1.0           0
+
+   view  condition  grade  {\ldots}  sqft\_living15\_scaled  sqft\_lot15\_scaled  \textbackslash{}
+0     0          3      7  {\ldots}              0.161934           0.005742
+1     0          3      7  {\ldots}              0.222165           0.008027
+2     0          3      6  {\ldots}              0.399415           0.008513
+3     0          5      7  {\ldots}              0.165376           0.004996
+4     0          3      8  {\ldots}              0.241094           0.007871
+
+   bedrooms\_scaled  bathrooms\_scaled  view\_scaled  grade\_scaled  \textbackslash{}
+0         0.090909           0.12500          0.0      0.500000
+1         0.090909           0.28125          0.0      0.500000
+2         0.060606           0.12500          0.0      0.416667
+3         0.121212           0.37500          0.0      0.500000
+4         0.090909           0.25000          0.0      0.583333
+
+   floors\_scaled  yr\_renovated\_scaled  yr\_built\_scaled  condition\_scaled
+0            0.0             0.000000         0.478261               0.5
+1            0.4             0.988089         0.443478               0.5
+2            0.0             0.000000         0.286957               0.5
+3            0.0             0.000000         0.565217               1.0
+4            0.0             0.000000         0.756522               0.5
+
+[5 rows x 35 columns]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{17}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Проверим, что масштабирование не повлияло на распределение данных}
+\PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n}{scale\PYZus{}cols}\PY{p}{:}
+    \PY{n}{col\PYZus{}scaled} \PY{o}{=} \PY{n}{col} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZus{}scaled}\PY{l+s+s1}{\PYZsq{}}
+
+    \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{8}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
+    \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{col}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{)}
+    \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{col\PYZus{}scaled}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{50}\PY{p}{)}
+    \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{title}\PY{o}{.}\PY{n}{set\PYZus{}text}\PY{p}{(}\PY{n}{col}\PY{p}{)}
+    \PY{n}{ax}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{title}\PY{o}{.}\PY{n}{set\PYZus{}text}\PY{p}{(}\PY{n}{col\PYZus{}scaled}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_4.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_5.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_6.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_7.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_8.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_9.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_10.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_11.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_12.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_13.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_14.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_15.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Удалим стаыре столбцы.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{18}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{scale\PYZus{}cols}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{19}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{19}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+      price  waterfront  zipcode  sqft\_living\_scaled  sqft\_lot\_scaled  \textbackslash{}
+0  221900.0           0    98178            0.067170         0.003108
+1  538000.0           0    98125            0.172075         0.004072
+2  180000.0           0    98028            0.036226         0.005743
+3  604000.0           0    98136            0.126038         0.002714
+4  510000.0           0    98074            0.104906         0.004579
+
+   sqft\_above\_scaled  sqft\_basement\_scaled  lat\_scaled  long\_scaled  \textbackslash{}
+0           0.097588              0.000000    0.571498     0.217608
+1           0.206140              0.082988    0.908959     0.166113
+2           0.052632              0.000000    0.936143     0.237542
+3           0.083333              0.188797    0.586939     0.104651
+4           0.152412              0.000000    0.741354     0.393688
+
+   sqft\_living15\_scaled  sqft\_lot15\_scaled  bedrooms\_scaled  bathrooms\_scaled  \textbackslash{}
+0              0.161934           0.005742         0.090909           0.12500
+1              0.222165           0.008027         0.090909           0.28125
+2              0.399415           0.008513         0.060606           0.12500
+3              0.165376           0.004996         0.121212           0.37500
+4              0.241094           0.007871         0.090909           0.25000
+
+   view\_scaled  grade\_scaled  floors\_scaled  yr\_renovated\_scaled  \textbackslash{}
+0          0.0      0.500000            0.0             0.000000
+1          0.0      0.500000            0.4             0.988089
+2          0.0      0.416667            0.0             0.000000
+3          0.0      0.500000            0.0             0.000000
+4          0.0      0.583333            0.0             0.000000
+
+   yr\_built\_scaled  condition\_scaled
+0         0.478261               0.5
+1         0.443478               0.5
+2         0.286957               0.5
+3         0.565217               1.0
+4         0.756522               0.5
+\end{Verbatim}
+\end{tcolorbox}
+        
+\chapter{Проведение корреляционного анализа данных. Формирование
+промежуточных выводов о возможности построения моделей машинного
+обучения}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{20}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{7}\PY{p}{)}\PY{p}{)}
+\PY{n}{sns}\PY{o}{.}\PY{n}{heatmap}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{n}{method}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{pearson}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax}\PY{p}{,} \PY{n}{annot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{fmt}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.2f}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{20}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+<AxesSubplot:>
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_33_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Удалим столбцы, которые плохо коррелируют с целевым признаком `price'
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{21}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{long\PYZus{}scaled}\PY{l+s+s1}{\PYZsq{}} \PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{zipcode}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{yr\PYZus{}built\PYZus{}scaled}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{condition\PYZus{}scaled}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sqft\PYZus{}lot\PYZus{}scaled}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sqft\PYZus{}lot15\PYZus{}scaled}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{22}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{7}\PY{p}{)}\PY{p}{)}
+\PY{n}{sns}\PY{o}{.}\PY{n}{heatmap}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{n}{method}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{pearson}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{n}{ax}\PY{o}{=}\PY{n}{ax}\PY{p}{,} \PY{n}{annot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{fmt}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.2f}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{22}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+<AxesSubplot:>
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_36_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Вывод: * Корреляционные матрицы для исходных и масштабированных данных
+совпадают. * Целевой признак `price' хорошо коррелирует с
+`grade\_scaled', `sqft\_living\_scaled', `sqft\_living15\_scaled',
+`sqft\_above\_scaled', `bathrooms\_scaled', их точно надо оставить в
+модели регрессии * Признаки `long\_scaled' , `zipcode', `yr\_built',
+`condition', `sqft\_lot\_scaled', `sqft\_lot15\_scaled' почти не
+коррелируют с целевым признаком, их лучше удалить из модели * Большие по
+модулю значения коэффициентов корреляции свидетельствуют о значимой
+корреляции между исходными признаками и целевым признаком. На основании
+корреляционной матрицы можно сделать вывод о том, что данные позволяют
+построить модель машинного обучения.
+
+\chapter{Выбор метрик для последующей оценки качества
+моделей.}
+
+    В качестве метрик для решения задачи регрессии будем испсользовать: Mean
+Absolute Error, Mean Squared Error и r2 оценку.
+
+\section{Сохранение и визуализация метрик}
+
+    Разработаем класс, который поможет нам хранить метрики, их значения и
+визуализировать их.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{23}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{class} \PY{n+nc}{MetricLogger}\PY{p}{:}
+    
+    \PY{k}{def} \PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}
+            \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{metric}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{str}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+            \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{alg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{str}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+            \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{value}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{float}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{\PYZcb{}}\PY{p}{)}
+
+    \PY{k}{def} \PY{n+nf}{add}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{metric}\PY{p}{,} \PY{n}{alg}\PY{p}{,} \PY{n}{value}\PY{p}{)}\PY{p}{:}
+        \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+\PY{l+s+sd}{        Добавление значения}
+\PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{c+c1}{\PYZsh{} Удаление значения если оно уже было ранее добавлено}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{df}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{df}\PY{p}{[}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{metric}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{==}\PY{n}{metric}\PY{p}{)}\PY{o}{\PYZam{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{alg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{==}\PY{n}{alg}\PY{p}{)}\PY{p}{]}\PY{o}{.}\PY{n}{index}\PY{p}{,} \PY{n}{inplace} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} Добавление нового значения}
+        \PY{n}{temp} \PY{o}{=} \PY{p}{[}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{metric}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{metric}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{alg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{alg}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{value}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{value}\PY{p}{\PYZcb{}}\PY{p}{]}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{df} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{df}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{temp}\PY{p}{,} \PY{n}{ignore\PYZus{}index}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+
+    \PY{k}{def} \PY{n+nf}{get\PYZus{}data\PYZus{}for\PYZus{}metric}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{metric}\PY{p}{,} \PY{n}{ascending}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{:}
+        \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+\PY{l+s+sd}{        Формирование данных с фильтром по метрике}
+\PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{n}{temp\PYZus{}data} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{df}\PY{p}{[}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{metric}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{==}\PY{n}{metric}\PY{p}{]}
+        \PY{n}{temp\PYZus{}data\PYZus{}2} \PY{o}{=} \PY{n}{temp\PYZus{}data}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{by}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{value}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ascending}\PY{o}{=}\PY{n}{ascending}\PY{p}{)}
+        \PY{k}{return} \PY{n}{temp\PYZus{}data\PYZus{}2}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{alg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{values}\PY{p}{,} \PY{n}{temp\PYZus{}data\PYZus{}2}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{value}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{values}
+    
+    \PY{k}{def} \PY{n+nf}{plot}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{str\PYZus{}header}\PY{p}{,} \PY{n}{metric}\PY{p}{,} \PY{n}{ascending}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+        \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+\PY{l+s+sd}{        Вывод графика}
+\PY{l+s+sd}{        \PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{n}{array\PYZus{}labels}\PY{p}{,} \PY{n}{array\PYZus{}metric} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{get\PYZus{}data\PYZus{}for\PYZus{}metric}\PY{p}{(}\PY{n}{metric}\PY{p}{,} \PY{n}{ascending}\PY{p}{)}
+        \PY{n}{fig}\PY{p}{,} \PY{n}{ax1} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{n}{figsize}\PY{p}{)}
+        \PY{n}{pos} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{array\PYZus{}metric}\PY{p}{)}\PY{p}{)}
+        \PY{n}{rects} \PY{o}{=} \PY{n}{ax1}\PY{o}{.}\PY{n}{barh}\PY{p}{(}\PY{n}{pos}\PY{p}{,} \PY{n}{array\PYZus{}metric}\PY{p}{,}
+                         \PY{n}{align}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                         \PY{n}{height}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{,} 
+                         \PY{n}{tick\PYZus{}label}\PY{o}{=}\PY{n}{array\PYZus{}labels}\PY{p}{)}
+        \PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{n}{str\PYZus{}header}\PY{p}{)}
+        \PY{k}{for} \PY{n}{a}\PY{p}{,}\PY{n}{b} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{pos}\PY{p}{,} \PY{n}{array\PYZus{}metric}\PY{p}{)}\PY{p}{:}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{a}\PY{o}{\PYZhy{}}\PY{l+m+mf}{0.05}\PY{p}{,} \PY{n+nb}{str}\PY{p}{(}\PY{n+nb}{round}\PY{p}{(}\PY{n}{b}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{white}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}  
+\end{Verbatim}
+\end{tcolorbox}
+
+\chapter{Выбор наиболее подходящих моделей для решения задачи
+классификации или
+регрессии.}
+
+    Для задачи регрессии будем использовать следующие модели:
+
+\begin{itemize}
+\tightlist
+\item
+  Линейная регрессия
+\item
+  Метод ближайших соседей
+\item
+  Машина опорных векторов (линейный алгоритм)
+\item
+  Решающее дерево
+\item
+  Случайный лес
+\item
+  Градиентный бустинг
+\end{itemize}
+
+\chapter{Формирование обучающей и тестовой выборок на основе
+исходного набора
+данных}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{24}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{data}\PY{o}{.}\PY{n}{columns}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{24}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Index(['price', 'waterfront', 'sqft\_living\_scaled', 'sqft\_above\_scaled',
+       'sqft\_basement\_scaled', 'lat\_scaled', 'sqft\_living15\_scaled',
+       'bedrooms\_scaled', 'bathrooms\_scaled', 'view\_scaled', 'grade\_scaled',
+       'floors\_scaled', 'yr\_renovated\_scaled'],
+      dtype='object')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{25}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{feature\PYZus{}cols} \PY{o}{=} \PY{p}{[}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bedrooms\PYZus{}scaled}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bathrooms\PYZus{}scaled}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{floors\PYZus{}scaled}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{waterfront}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{view\PYZus{}scaled}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{grade\PYZus{}scaled}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{yr\PYZus{}renovated\PYZus{}scaled}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sqft\PYZus{}living\PYZus{}scaled}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sqft\PYZus{}above\PYZus{}scaled}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sqft\PYZus{}basement\PYZus{}scaled}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lat\PYZus{}scaled}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sqft\PYZus{}living15\PYZus{}scaled}\PY{l+s+s1}{\PYZsq{}}
+\PY{p}{]}
+\PY{n}{data\PYZus{}X} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{feature\PYZus{}cols}\PY{p}{]}
+\PY{n}{data\PYZus{}Y} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{price}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{data\PYZus{}X\PYZus{}train}\PY{p}{,} \PY{n}{data\PYZus{}X\PYZus{}test}\PY{p}{,} \PY{n}{data\PYZus{}y\PYZus{}train}\PY{p}{,} \PY{n}{data\PYZus{}y\PYZus{}test} \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}\PY{n}{data\PYZus{}X}\PY{p}{,} \PY{n}{data\PYZus{}Y}\PY{p}{,}\PY{n}{test\PYZus{}size}\PY{o}{=}\PY{l+m+mf}{0.2}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+\chapter{Построение базового решения (baseline) для выбранных моделей
+без подбора гиперпараметров. Производится обучение моделей на основе
+обучающей выборки и оценка качества моделей на основе тестовой
+выборки.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{26}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Модели}
+\PY{n}{regr\PYZus{}models} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{LR}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{LinearRegression}\PY{p}{(}\PY{p}{)}\PY{p}{,} 
+               \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{KNN\PYZus{}1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{KNeighborsRegressor}\PY{p}{(}\PY{n}{n\PYZus{}neighbors}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}
+               \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{LinearSVR}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{LinearSVR}\PY{p}{(}\PY{n}{C}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{)}\PY{p}{,}
+               \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Tree}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{DecisionTreeRegressor}\PY{p}{(}\PY{p}{)}\PY{p}{,}
+               \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{RF}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{RandomForestRegressor}\PY{p}{(}\PY{p}{)}\PY{p}{,}
+               \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GB}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{GradientBoostingRegressor}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{27}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Сохранение метрик}
+\PY{n}{regrMetricLogger} \PY{o}{=} \PY{n}{MetricLogger}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{28}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{regr\PYZus{}train\PYZus{}model}\PY{p}{(}\PY{n}{model\PYZus{}name}\PY{p}{,} \PY{n}{model}\PY{p}{,} \PY{n}{regrMetricLogger}\PY{p}{)}\PY{p}{:}
+    \PY{n}{model}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{data\PYZus{}X\PYZus{}train}\PY{p}{,} \PY{n}{data\PYZus{}y\PYZus{}train}\PY{p}{)}
+    \PY{n}{y\PYZus{}pred} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{data\PYZus{}X\PYZus{}test}\PY{p}{)}
+    
+    \PY{n}{mae} \PY{o}{=} \PY{n}{mean\PYZus{}absolute\PYZus{}error}\PY{p}{(}\PY{n}{data\PYZus{}y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}
+    \PY{n}{mse} \PY{o}{=} \PY{n}{mean\PYZus{}squared\PYZus{}error}\PY{p}{(}\PY{n}{data\PYZus{}y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}
+    \PY{n}{r2} \PY{o}{=} \PY{n}{r2\PYZus{}score}\PY{p}{(}\PY{n}{data\PYZus{}y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}
+
+    \PY{n}{regrMetricLogger}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MAE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{model\PYZus{}name}\PY{p}{,} \PY{n}{mae}\PY{p}{)}
+    \PY{n}{regrMetricLogger}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MSE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{model\PYZus{}name}\PY{p}{,} \PY{n}{mse}\PY{p}{)}
+    \PY{n}{regrMetricLogger}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{R2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{model\PYZus{}name}\PY{p}{,} \PY{n}{r2}\PY{p}{)}    
+    
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{ }\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s1}{ MAE=}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{, MSE=}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{, R2=}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}
+        \PY{n}{model\PYZus{}name}\PY{p}{,} \PY{n+nb}{round}\PY{p}{(}\PY{n}{mae}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,} \PY{n+nb}{round}\PY{p}{(}\PY{n}{mse}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,} \PY{n+nb}{round}\PY{p}{(}\PY{n}{r2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{29}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{for} \PY{n}{model\PYZus{}name}\PY{p}{,} \PY{n}{model} \PY{o+ow}{in} \PY{n}{regr\PYZus{}models}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n}{regr\PYZus{}train\PYZus{}model}\PY{p}{(}\PY{n}{model\PYZus{}name}\PY{p}{,} \PY{n}{model}\PY{p}{,} \PY{n}{regrMetricLogger}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+LR       MAE=136653.422, MSE=60599347912.745, R2=0.649
+KNN\_1    MAE=117071.057, MSE=55480600711.547, R2=0.679
+LinearSVR        MAE=514663.235, MSE=435404175784.022, R2=-1.523
+Tree     MAE=125079.57, MSE=60957821930.478, R2=0.647
+RF       MAE=91576.642, MSE=32389789387.025, R2=0.812
+GB       MAE=94569.69, MSE=32432160464.488, R2=0.812
+    \end{Verbatim}
+
+\chapter{Подбор гиперпараметров для выбранных моделей. Рекомендуется
+использовать методы кросс-валидации. В зависимости от используемой
+библиотеки можно применять функцию GridSearchCV, использовать перебор
+параметров в цикле, или использовать другие
+методы.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{31}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{kn\PYZus{}n\PYZus{}range} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+\PY{n}{kn\PYZus{}tuned\PYZus{}parameters} \PY{o}{=} \PY{p}{[}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{n\PYZus{}neighbors}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{kn\PYZus{}n\PYZus{}range}\PY{p}{\PYZcb{}}\PY{p}{]}
+\PY{n}{kn\PYZus{}tuned\PYZus{}parameters}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{31}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[\{'n\_neighbors': array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13,
+14])\}]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{32}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{o}{\PYZpc{}\PYZpc{}time}
+\PY{n}{gs\PYZus{}kn} \PY{o}{=} \PY{n}{GridSearchCV}\PY{p}{(}\PY{n}{KNeighborsRegressor}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{kn\PYZus{}tuned\PYZus{}parameters}\PY{p}{,} \PY{n}{cv}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{scoring}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{neg\PYZus{}mean\PYZus{}squared\PYZus{}error}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{gs\PYZus{}kn}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{data\PYZus{}X\PYZus{}train}\PY{p}{,} \PY{n}{data\PYZus{}y\PYZus{}train}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+CPU times: user 49.7 s, sys: 4.3 ms, total: 49.7 s
+Wall time: 49.8 s
+    \end{Verbatim}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{32}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+GridSearchCV(cv=5, estimator=KNeighborsRegressor(),
+             param\_grid=[\{'n\_neighbors': array([ 1,  2,  3,  4,  5,  6,  7,  8,
+9, 10, 11, 12, 13, 14])\}],
+             scoring='neg\_mean\_squared\_error')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{33}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Лучшая модель}
+\PY{n}{gs\PYZus{}kn}\PY{o}{.}\PY{n}{best\PYZus{}estimator\PYZus{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{33}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+KNeighborsRegressor(n\_neighbors=10)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{37}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Изменение качества на тестовой выборке в зависимости от К\PYZhy{}соседей}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kn\PYZus{}n\PYZus{}range}\PY{p}{,} \PY{n}{gs\PYZus{}kn}\PY{o}{.}\PY{n}{cv\PYZus{}results\PYZus{}}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mean\PYZus{}test\PYZus{}score}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{37}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[<matplotlib.lines.Line2D at 0x7efcc11ffcd0>]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_57_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{43}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{lsvr\PYZus{}c\PYZus{}range} \PY{o}{=}  \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{100000}\PY{p}{,} \PY{l+m+mi}{10000}\PY{p}{)}\PY{p}{)}
+\PY{n}{lsvr\PYZus{}tuned\PYZus{}parameters} \PY{o}{=} \PY{p}{[}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{lsvr\PYZus{}c\PYZus{}range}\PY{p}{\PYZcb{}}\PY{p}{]}
+\PY{n}{lsvr\PYZus{}tuned\PYZus{}parameters}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{43}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[\{'C': array([    1, 10001, 20001, 30001, 40001, 50001, 60001, 70001, 80001,
+         90001])\}]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{39}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{o}{\PYZpc{}\PYZpc{}time}
+\PY{n}{gs\PYZus{}lsvr} \PY{o}{=} \PY{n}{GridSearchCV}\PY{p}{(}\PY{n}{LinearSVR}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{lsvr\PYZus{}tuned\PYZus{}parameters}\PY{p}{,} \PY{n}{cv}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{scoring}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{neg\PYZus{}mean\PYZus{}squared\PYZus{}error}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{gs\PYZus{}lsvr}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{data\PYZus{}X\PYZus{}train}\PY{p}{,} \PY{n}{data\PYZus{}y\PYZus{}train}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+CPU times: user 7.12 s, sys: 5.25 s, total: 12.4 s
+Wall time: 3.48 s
+    \end{Verbatim}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{39}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+GridSearchCV(cv=5, estimator=LinearSVR(),
+             param\_grid=[\{'C': array([    1, 10001, 20001, 30001, 40001, 50001,
+60001, 70001, 80001,
+       90001])\}],
+             scoring='neg\_mean\_squared\_error')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{40}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Лучшая модель}
+\PY{n}{gs\PYZus{}lsvr}\PY{o}{.}\PY{n}{best\PYZus{}estimator\PYZus{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{40}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+LinearSVR(C=90001)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{45}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Изменение качества на тестовой выборке в зависимости от C}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{lsvr\PYZus{}c\PYZus{}range}\PY{p}{,} \PY{n}{gs\PYZus{}lsvr}\PY{o}{.}\PY{n}{cv\PYZus{}results\PYZus{}}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mean\PYZus{}test\PYZus{}score}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{45}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[<matplotlib.lines.Line2D at 0x7efcc03a24f0>]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_61_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{87}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{tree\PYZus{}depth\PYZus{}range} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{11}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+\PY{n}{tree\PYZus{}tuned\PYZus{}parameters} \PY{o}{=} \PY{p}{[}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{max\PYZus{}depth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tree\PYZus{}depth\PYZus{}range}\PY{p}{\PYZcb{}}\PY{p}{]}
+\PY{n}{tree\PYZus{}tuned\PYZus{}parameters}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{87}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[\{'max\_depth': array([ 3,  4,  5,  6,  7,  8,  9, 10])\}]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{88}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{o}{\PYZpc{}\PYZpc{}time}
+\PY{n}{gs\PYZus{}tree} \PY{o}{=} \PY{n}{GridSearchCV}\PY{p}{(}\PY{n}{DecisionTreeRegressor}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{tree\PYZus{}tuned\PYZus{}parameters}\PY{p}{,} \PY{n}{cv}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{scoring}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{neg\PYZus{}mean\PYZus{}squared\PYZus{}error}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{gs\PYZus{}tree}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{data\PYZus{}X\PYZus{}train}\PY{p}{,} \PY{n}{data\PYZus{}y\PYZus{}train}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+CPU times: user 2.05 s, sys: 21 µs, total: 2.05 s
+Wall time: 2.09 s
+    \end{Verbatim}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{88}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+GridSearchCV(cv=5, estimator=DecisionTreeRegressor(),
+             param\_grid=[\{'max\_depth': array([ 3,  4,  5,  6,  7,  8,  9,
+10])\}],
+             scoring='neg\_mean\_squared\_error')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{49}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Лучшая модель}
+\PY{n}{gs\PYZus{}tree}\PY{o}{.}\PY{n}{best\PYZus{}estimator\PYZus{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{49}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+DecisionTreeRegressor(max\_depth=9)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{50}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Изменение качества на тестовой выборке в зависимости от глубины дерева}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{tree\PYZus{}depth\PYZus{}range}\PY{p}{,} \PY{n}{gs\PYZus{}tree}\PY{o}{.}\PY{n}{cv\PYZus{}results\PYZus{}}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mean\PYZus{}test\PYZus{}score}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{50}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[<matplotlib.lines.Line2D at 0x7efcbfa012b0>]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_65_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{73}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{rf\PYZus{}n\PYZus{}range} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{200}\PY{p}{,}\PY{l+m+mi}{500}\PY{p}{,}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}
+\PY{n}{rf\PYZus{}tuned\PYZus{}parameters} \PY{o}{=} \PY{p}{[}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{n\PYZus{}estimators}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{rf\PYZus{}n\PYZus{}range}\PY{p}{\PYZcb{}}\PY{p}{]}
+\PY{n}{rf\PYZus{}tuned\PYZus{}parameters}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{73}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[\{'n\_estimators': array([200, 300, 400])\}]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{80}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{o}{\PYZpc{}\PYZpc{}time}
+\PY{n}{gs\PYZus{}rf} \PY{o}{=} \PY{n}{GridSearchCV}\PY{p}{(}\PY{n}{RandomForestRegressor}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{rf\PYZus{}tuned\PYZus{}parameters}\PY{p}{,} \PY{n}{cv}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{scoring}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{neg\PYZus{}mean\PYZus{}squared\PYZus{}error}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{n\PYZus{}jobs}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{gs\PYZus{}rf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{data\PYZus{}X\PYZus{}train}\PY{p}{,} \PY{n}{data\PYZus{}y\PYZus{}train}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+CPU times: user 19.2 s, sys: 251 ms, total: 19.4 s
+Wall time: 2min 49s
+    \end{Verbatim}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{80}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+GridSearchCV(cv=5, estimator=RandomForestRegressor(), n\_jobs=-1,
+             param\_grid=[\{'n\_estimators': array([200, 300, 400])\}],
+             scoring='neg\_mean\_squared\_error')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{81}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Лучшая модель}
+\PY{n}{gs\PYZus{}rf}\PY{o}{.}\PY{n}{best\PYZus{}estimator\PYZus{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{81}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+RandomForestRegressor(n\_estimators=200)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{82}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Изменение качества на тестовой выборке в зависимости от n\PYZus{}estimators}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{rf\PYZus{}n\PYZus{}range}\PY{p}{,} \PY{n}{gs\PYZus{}rf}\PY{o}{.}\PY{n}{cv\PYZus{}results\PYZus{}}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mean\PYZus{}test\PYZus{}score}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{82}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[<matplotlib.lines.Line2D at 0x7efcc88bf910>]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_69_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{83}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{o}{\PYZpc{}\PYZpc{}time}
+\PY{n}{gs\PYZus{}gb} \PY{o}{=} \PY{n}{GridSearchCV}\PY{p}{(}\PY{n}{GradientBoostingRegressor}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{rf\PYZus{}tuned\PYZus{}parameters}\PY{p}{,} \PY{n}{cv}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{scoring}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{neg\PYZus{}mean\PYZus{}squared\PYZus{}error}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{n\PYZus{}jobs}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{gs\PYZus{}gb}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{data\PYZus{}X\PYZus{}train}\PY{p}{,} \PY{n}{data\PYZus{}y\PYZus{}train}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+CPU times: user 9.77 s, sys: 6.56 ms, total: 9.78 s
+Wall time: 45.2 s
+    \end{Verbatim}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{83}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+GridSearchCV(cv=5, estimator=GradientBoostingRegressor(), n\_jobs=-1,
+             param\_grid=[\{'n\_estimators': array([200, 300, 400])\}],
+             scoring='neg\_mean\_squared\_error')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{84}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Лучшая модель}
+\PY{n}{gs\PYZus{}gb}\PY{o}{.}\PY{n}{best\PYZus{}estimator\PYZus{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{84}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+GradientBoostingRegressor(n\_estimators=400)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{85}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Изменение качества на тестовой выборке в зависимости от n\PYZus{}estimators}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{rf\PYZus{}n\PYZus{}range}\PY{p}{,} \PY{n}{gs\PYZus{}gb}\PY{o}{.}\PY{n}{cv\PYZus{}results\PYZus{}}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mean\PYZus{}test\PYZus{}score}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{85}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[<matplotlib.lines.Line2D at 0x7efcc8db0820>]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_72_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+\chapter{Повторение пункта 8 для найденных оптимальных значений
+гиперпараметров. Сравнение качества полученных моделей с качеством
+baseline-моделей.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{89}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{regr\PYZus{}models\PYZus{}grid} \PY{o}{=} \PY{p}{\PYZob{}} 
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{KNN(best)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{gs\PYZus{}kn}\PY{o}{.}\PY{n}{best\PYZus{}estimator\PYZus{}}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Tree(best)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{gs\PYZus{}tree}\PY{o}{.}\PY{n}{best\PYZus{}estimator\PYZus{}}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{LinearSVR(best)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{gs\PYZus{}lsvr}\PY{o}{.}\PY{n}{best\PYZus{}estimator\PYZus{}}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{RF(best)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{gs\PYZus{}rf}\PY{o}{.}\PY{n}{best\PYZus{}estimator\PYZus{}}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GB(best)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{gs\PYZus{}gb}\PY{o}{.}\PY{n}{best\PYZus{}estimator\PYZus{}}
+                   \PY{p}{\PYZcb{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{90}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{for} \PY{n}{model\PYZus{}name}\PY{p}{,} \PY{n}{model} \PY{o+ow}{in} \PY{n}{regr\PYZus{}models\PYZus{}grid}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n}{regr\PYZus{}train\PYZus{}model}\PY{p}{(}\PY{n}{model\PYZus{}name}\PY{p}{,} \PY{n}{model}\PY{p}{,} \PY{n}{regrMetricLogger}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+KNN(best)        MAE=96657.319, MSE=47779449527.494, R2=0.723
+Tree(best)       MAE=108504.681, MSE=42722488692.848, R2=0.752
+LinearSVR(best)          MAE=129267.13, MSE=71875871300.374, R2=0.584
+RF(best)         MAE=91524.206, MSE=33475421722.717, R2=0.806
+GB(best)         MAE=92487.687, MSE=30236231505.354, R2=0.825
+    \end{Verbatim}
+
+\chapter{Формирование выводов о качестве построенных моделей на
+основе выбранных метрик. Результаты сравнения качества рекомендуется
+отобразить в виде графиков и сделать выводы в форме текстового описания.
+Рекомендуется построение графиков обучения и валидации, влияния значений
+гиперпарметров на качество моделей и
+т.д.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{91}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Метрики качества модели}
+\PY{n}{regr\PYZus{}metrics} \PY{o}{=} \PY{n}{regrMetricLogger}\PY{o}{.}\PY{n}{df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{metric}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{p}{)}
+\PY{n}{regr\PYZus{}metrics}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{91}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array(['MAE', 'MSE', 'R2'], dtype=object)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{92}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{regrMetricLogger}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Метрика: }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MAE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MAE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{7}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_78_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{93}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{regrMetricLogger}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Метрика: }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MSE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MSE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{7}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_79_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{94}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{regrMetricLogger}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Метрика: }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{R2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{R2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ascending}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{7}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_80_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+\chapter{AutoML}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{76}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{autosklearn}\PY{n+nn}{.}\PY{n+nn}{regression}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{78}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{automl} \PY{o}{=} \PY{n}{autosklearn}\PY{o}{.}\PY{n}{regression}\PY{o}{.}\PY{n}{AutoSklearnRegressor}\PY{p}{(}\PY{n}{time\PYZus{}left\PYZus{}for\PYZus{}this\PYZus{}task}\PY{o}{=}\PY{l+m+mi}{120}\PY{p}{,} \PY{n}{per\PYZus{}run\PYZus{}time\PYZus{}limit}\PY{o}{=}\PY{l+m+mi}{30}\PY{p}{)}
+\PY{n}{automl}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{data\PYZus{}X\PYZus{}train}\PY{p}{,} \PY{n}{data\PYZus{}y\PYZus{}train}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{78}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+AutoSklearnRegressor(per\_run\_time\_limit=30, time\_left\_for\_this\_task=120)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{79}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{predictions} \PY{o}{=} \PY{n}{automl}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{data\PYZus{}X\PYZus{}test}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{AutoML R2 score:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{r2\PYZus{}score}\PY{p}{(}\PY{n}{data\PYZus{}y\PYZus{}test}\PY{p}{,} \PY{n}{predictions}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+AutoML R2 score: 0.808234600610789
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{95}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{automl}\PY{o}{.}\PY{n}{show\PYZus{}models}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[(0.680000, SimpleRegressionPipeline(\{'data\_preprocessing:categorical\_transforme
+r:categorical\_encoding:\_\_choice\_\_': 'no\_encoding',
+'data\_preprocessing:categorical\_transformer:category\_coalescence:\_\_choice\_\_':
+'no\_coalescense',
+'data\_preprocessing:numerical\_transformer:imputation:strategy': 'mean',
+'data\_preprocessing:numerical\_transformer:rescaling:\_\_choice\_\_':
+'robust\_scaler', 'feature\_preprocessor:\_\_choice\_\_': 'feature\_agglomeration',
+'regressor:\_\_choice\_\_': 'gradient\_boosting',
+'data\_preprocessing:numerical\_transformer:rescaling:robust\_scaler:q\_max':
+0.7727512096172742,
+'data\_preprocessing:numerical\_transformer:rescaling:robust\_scaler:q\_min':
+0.22461598115758682, 'feature\_preprocessor:feature\_agglomeration:affinity':
+'manhattan', 'feature\_preprocessor:feature\_agglomeration:linkage': 'complete',
+'feature\_preprocessor:feature\_agglomeration:n\_clusters': 21,
+'feature\_preprocessor:feature\_agglomeration:pooling\_func': 'max',
+'regressor:gradient\_boosting:early\_stop': 'train',
+'regressor:gradient\_boosting:l2\_regularization': 2.208787572338781e-05,
+'regressor:gradient\_boosting:learning\_rate': 0.036087332404571744,
+'regressor:gradient\_boosting:loss': 'least\_squares',
+'regressor:gradient\_boosting:max\_bins': 255,
+'regressor:gradient\_boosting:max\_depth': 'None',
+'regressor:gradient\_boosting:max\_leaf\_nodes': 64,
+'regressor:gradient\_boosting:min\_samples\_leaf': 3,
+'regressor:gradient\_boosting:scoring': 'loss',
+'regressor:gradient\_boosting:tol': 1e-07,
+'regressor:gradient\_boosting:n\_iter\_no\_change': 18\},
+dataset\_properties=\{
+  'task': 4,
+  'sparse': False,
+  'multioutput': False,
+  'target\_type': 'regression',
+  'signed': False\})),
+(0.220000, SimpleRegressionPipeline(\{'data\_preprocessing:categorical\_transformer
+:categorical\_encoding:\_\_choice\_\_': 'one\_hot\_encoding',
+'data\_preprocessing:categorical\_transformer:category\_coalescence:\_\_choice\_\_':
+'minority\_coalescer',
+'data\_preprocessing:numerical\_transformer:imputation:strategy': 'mean',
+'data\_preprocessing:numerical\_transformer:rescaling:\_\_choice\_\_': 'none',
+'feature\_preprocessor:\_\_choice\_\_': 'polynomial', 'regressor:\_\_choice\_\_':
+'gradient\_boosting', 'data\_preprocessing:categorical\_transformer:category\_coales
+cence:minority\_coalescer:minimum\_fraction': 0.010000000000000004,
+'feature\_preprocessor:polynomial:degree': 3,
+'feature\_preprocessor:polynomial:include\_bias': 'True',
+'feature\_preprocessor:polynomial:interaction\_only': 'True',
+'regressor:gradient\_boosting:early\_stop': 'train',
+'regressor:gradient\_boosting:l2\_regularization': 6.085630700044881e-10,
+'regressor:gradient\_boosting:learning\_rate': 0.12392806728650493,
+'regressor:gradient\_boosting:loss': 'least\_squares',
+'regressor:gradient\_boosting:max\_bins': 255,
+'regressor:gradient\_boosting:max\_depth': 'None',
+'regressor:gradient\_boosting:max\_leaf\_nodes': 31,
+'regressor:gradient\_boosting:min\_samples\_leaf': 25,
+'regressor:gradient\_boosting:scoring': 'loss',
+'regressor:gradient\_boosting:tol': 1e-07,
+'regressor:gradient\_boosting:n\_iter\_no\_change': 7\},
+dataset\_properties=\{
+  'task': 4,
+  'sparse': False,
+  'multioutput': False,
+  'target\_type': 'regression',
+  'signed': False\})),
+(0.100000, SimpleRegressionPipeline(\{'data\_preprocessing:categorical\_transformer
+:categorical\_encoding:\_\_choice\_\_': 'no\_encoding',
+'data\_preprocessing:categorical\_transformer:category\_coalescence:\_\_choice\_\_':
+'minority\_coalescer',
+'data\_preprocessing:numerical\_transformer:imputation:strategy': 'mean',
+'data\_preprocessing:numerical\_transformer:rescaling:\_\_choice\_\_': 'none',
+'feature\_preprocessor:\_\_choice\_\_': 'polynomial', 'regressor:\_\_choice\_\_':
+'ard\_regression', 'data\_preprocessing:categorical\_transformer:category\_coalescen
+ce:minority\_coalescer:minimum\_fraction': 0.00829519231049576,
+'feature\_preprocessor:polynomial:degree': 2,
+'feature\_preprocessor:polynomial:include\_bias': 'False',
+'feature\_preprocessor:polynomial:interaction\_only': 'False',
+'regressor:ard\_regression:alpha\_1': 4.7044575285722365e-05,
+'regressor:ard\_regression:alpha\_2': 0.000629863807127318,
+'regressor:ard\_regression:fit\_intercept': 'True',
+'regressor:ard\_regression:lambda\_1': 7.584067704707025e-10,
+'regressor:ard\_regression:lambda\_2': 3.923255608410879e-08,
+'regressor:ard\_regression:n\_iter': 300,
+'regressor:ard\_regression:threshold\_lambda': 4052.403778957396,
+'regressor:ard\_regression:tol': 0.009359388994186051\},
+dataset\_properties=\{
+  'task': 4,
+  'sparse': False,
+  'multioutput': False,
+  'target\_type': 'regression',
+  'signed': False\})),
+]
+    \end{Verbatim}
+
+
+\chapter{Код для макета WEB-версии}
+\inputminted[tabsize=4, linenos, breaklines]{python}{app.py}
+
+\chapter{Заключение}
+
+\qquad В ходе работы я исследовал несколько разных моделей машинного обучения(в т.ч. используя автоматический пакет AutoML) и создал макет веб-приложения, предназначенного для анализа данных. \\
+\qquad Лучше всего себя показали ансамблевые модели градиентного бустинга и
+случаного леса. Самый лучший результат показывает модель градиентного
+бустинга(при n\_estimators=400). Без подбора параметров модель
+случайного леса дает лучший результат. Худшей моделью оказалась
+LinearSVR, без подбора параметров дает вообще отрицательный результат по
+оценке r2. AutoML также выбрал модель градиентного бустинга как
+оптимальную. \\
+
+\chapter{Список использованных источников}
+\begin{itemize}
+		\item Конспекты лекций - https://github.com/ugapanyuk/ml\_course\_2021/wiki/COURSE\_TMO
+		\item Документация библиотеки skit-learn - https://scikit-learn.org/stable/user\_guide.html
+		\item Документация библиотеки streamlit - https://docs.streamlit.io/en/stable/
+		\item Использованный набор данных для обучения - https://www.kaggle.com/harlfoxem/housesalesprediction?select=kc\_house\_data.csv
+		\item Jupyter Lab - https://jupyterlab.readthedocs.io/en/stable/index.html
+\end{itemize}
+
+    
+\end{document}
